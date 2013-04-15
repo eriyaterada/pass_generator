@@ -1,0 +1,23 @@
+<h1>Listing encpasswords</h1>
+
+<table>
+  <tr>
+    <th>Encrypted password</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @encpasswords.each do |encpassword| %>
+  <tr>
+    <td><%= encpassword.encrypted_password %></td>
+    <td><%= link_to 'Show', encpassword %></td>
+    <td><%= link_to 'Edit', edit_encpassword_path(encpassword) %></td>
+    <td><%= link_to 'Destroy', encpassword, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Encpassword', new_encpassword_path %>
