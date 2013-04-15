@@ -4,13 +4,13 @@
   <title>PassGenerator</title>
   <%= stylesheet_link_tag    "/css/bootstrap", :media => "all" %>
   <%= javascript_include_tag "/js/bootstrap.js" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div class="wrapper">
-	<div class="content">
-<%= yield %>
-	</div>
+<div class="container">
+	<%= yield %>
+</div>
 </div>
 </body>
 </html>

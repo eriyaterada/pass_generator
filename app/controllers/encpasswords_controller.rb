@@ -1,8 +1,11 @@
 class EncpasswordsController < ApplicationController
+  def authorize
+  end
+  
   # GET /encpasswords
   # GET /encpasswords.json
   def index
-    @encpasswords = Encpassword.all
+    @encpasswords = current_user.encpasswords.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -40,7 +43,7 @@ class EncpasswordsController < ApplicationController
   # POST /encpasswords
   # POST /encpasswords.json
   def create
-    @encpassword = Encpassword.new(params[:encpassword])
+    @encpassword  = current_user.encpasswords.build(params[:encpassword])
 
     respond_to do |format|
       if @encpassword.save
@@ -79,5 +82,19 @@ class EncpasswordsController < ApplicationController
       format.html { redirect_to encpasswords_url }
       format.json { head :no_content }
     end
+  end
+  
+ 
+  def current_user
+    #@current_user ||= user_from_remember_token
+    @current_user = session[:user]
+  end
+  
+  def user_from_remember_token
+    User.authenticate_with_salt(*remember_token)
+  end
+    
+  def remember_token
+    cookies.signed[:remember_token] || [nil, nil]
   end
 end
