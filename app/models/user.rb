@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation
   passowrd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[!\#\$\@\_\+\,\?\[\]])(?!.*["'])/
   validates :password, :presence => true, :confirmation => true, :length => {:within =>8...32}, :format => {:with => passowrd_regex}
+
   before_save :encrypted_password
   def has_password?(submitted_password)
     encrypted_password == encrypt(submitted_password)
@@ -40,4 +41,6 @@ class User < ActiveRecord::Base
     Digest::SHA2.hexdigest(string)
   end
   
+
+
 end
