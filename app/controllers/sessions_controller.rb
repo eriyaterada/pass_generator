@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       render 'new'
     else
       session[:remember_token] = user.id #this stores the id of the user logged in the session
-      redirect_to :controller => 'passwords', :action => 'index'
+      redirect_to :controller => 'encpasswords', :action => 'index'
     end
   end
   

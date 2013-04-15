@@ -1,4 +1,8 @@
 PassGenerator::Application.routes.draw do
+  resources :encpasswords
+
+  resources :passwords
+
   get "sessions/new"
 
   get "users/new"
