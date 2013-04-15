@@ -14,12 +14,19 @@
 <%= f.label :password %> 
 <%= f.password_field :password, :id => "passwordField" %> <br />
 
-<%= f.submit "Login", :id => "submit", :class => "btn btn-primary btn-large" %> <br />
-<% end %>
-
 <div id="warning">
 	<%= flash.now[:error] %>
 	<p><%= flash[:notice] %></p>
+</div>
+
+<%= f.submit "Login", :id => "submit", :class => "btn btn-primary btn-large" %> <br />
+<% end %>
+
+
+
+<div class="first_time">
+<p>Your first time here?<br />
+<%= link_to 'Sign up', {:controller => 'users', :action => 'new'}%> for free.</p>
 </div>
 
 <! -- CLOSES LOGIN -- >

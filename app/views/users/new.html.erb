@@ -1,4 +1,41 @@
-<h1>Create a new user</h1>
+<% def authorize %>
+<% end %>
+
+<h1>Please fill in the form to sign up</h1>
 
 
 
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> 
+        prohibited this info from being saved:</h2>
+    <p>There were problems with the following fields:</p>
+    <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+
+
+<div class = "centerize">
+<%= form_for @user, :action => :create do |f| %>
+
+<%= f.label :email %> <br />
+<%= f.text_field :email %> <br />
+
+<%= f.label :password %> <br />
+<%= f.text_field :password %> <br />
+
+<%= f.label :password_confirmation %> <br />
+<%= f.text_field :password_confirmation %> <br />
+
+
+
+<%= f.submit "Submit" %> <br />
+
+<% end %>
+</div>

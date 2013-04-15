@@ -1,4 +1,5 @@
 require 'digest'
+<<<<<<< HEAD
 
 class User < ActiveRecord::Base
   attr_accessible :email, :name
@@ -21,6 +22,31 @@ class User < ActiveRecord::Base
     #this ensures that before you save the password to the databse,
     #the method encrypt_password is called
     
+=======
+class User < ActiveRecord::Base
+  # a user has many encrypted passwords, and they will be deleted along with the user
+  has_many :encpasswords, :dependent => :destroy
+  
+  #VALIDATIONS
+  attr_accessible :email
+  validates :email, :presence => true, :length => {:maximum => 50} #validate the presence of name and that email address is less than 50 characters long
+
+  #AUTHENTICATION
+  email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :email, :presence => true, :format => {:with => email_regex},
+            :uniqueness => {:case_sensitive => false}
+
+  attr_accessor :password #this creates the virtual attributes password
+  attr_accessible :email, :password, :password_confirmation
+  passowrd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[!\#\$\@\_\+\,\?\[\]])(?!.*["'])/
+  validates :password, :presence => true, :confirmation => true, :length => {:within =>8...32}, :format => {:with => passowrd_regex}
+
+  #this ensures that before you save the password to the databse,
+  #the method encrypt_password is called
+  before_save :encrypt_password
+ 
+  
+>>>>>>> 6993880c2e93ff7acd9c21884d9fb39f659234af
 private
    def encrypt_password
       self.salt = make_salt unless has_password?(password)

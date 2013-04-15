@@ -1,0 +1,10 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Encrypted password:</b>
+  <%= @encpassword.encrypted_password %>
+</p>
+
+
+<%= link_to 'Edit', edit_encpassword_path(@encpassword) %> |
+<%= link_to 'Back', encpasswords_path %>
