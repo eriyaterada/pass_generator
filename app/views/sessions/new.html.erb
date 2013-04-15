@@ -1,0 +1,26 @@
+<h1>RANDOM PASSWORD GENERATOR</h1>
+
+<h2 class="center">Please login:</h2>
+
+<div id="login">
+
+
+<%= form_for(:session, :url => sessions_path) do |f| %>
+
+
+<%= f.label :email %> 
+<%= f.text_field :email, :id => "emailField" %> <br />
+
+<%= f.label :password %> 
+<%= f.password_field :password, :id => "passwordField" %> <br />
+
+<%= f.submit "Login", :id => "submit", :class => "btn btn-primary btn-large" %> <br />
+<% end %>
+
+<div id="warning">
+	<%= flash.now[:error] %>
+	<p><%= flash[:notice] %></p>
+</div>
+
+<! -- CLOSES LOGIN -- >
+</div>

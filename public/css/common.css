@@ -1,0 +1,18 @@
+/* css file */
+body{
+	padding: 0;
+	margin: 0;
+}
+h1{
+	margin-top: 0;
+}
+
+.wrapper{
+	width: 960px;
+	margin: 0 auto;
+	background: red;
+}
+
+.content{
+	padding: 20px;	
+}

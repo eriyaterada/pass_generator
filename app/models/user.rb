@@ -9,5 +9,5 @@ class User < ActiveRecord::Base
   attr_accessor :password
   attr_accessible :email, :password, :password_confirmation
   passowrd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[!\#\$\@\_\+\,\?\[\]])(?!.*["'])/
-  valitates :password, :presence => true, :confirmation => true, :length => {:within =>8...32}, :format => {:with => passowrd_regex}
+  validates :password, :presence => true, :confirmation => true, :length => {:within =>8...32}, :format => {:with => passowrd_regex}
 end
