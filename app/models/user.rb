@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   #AUTHENTICATION
   attr_accessor :password #this creates the virtual attributes password
   attr_accessible :name, :email, :password, :password_confirmation
-   passowrd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[!\#\$\@\_\+\,\?\[\]])(?!.*["'])/
+   passowrd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[!\#\$\@\_\+\,\?\[\]\&])(?!.*["'])/
   validates :password, :presence => true, :confirmation => true, :length => {:within =>8...32}, :format => {:with => passowrd_regex}
 
   
