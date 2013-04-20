@@ -78,7 +78,7 @@ function populateform(enterlength){
 <div class="control-group">
     <label class = "control-label">Enter Desired Length for Password :</label>
     <div class="controls">
-      <input type="text" name="thelength" id="thelength" size=3 value="7" class="text_field"/>
+      <input type="text" name="thelength" id="thelength" size=3 value="8" class="text_field"/>
     </div>
   </div>
 
@@ -111,7 +111,7 @@ function populateform(enterlength){
   </div>
 
   <div class="control-group">
-  <input type="button" value="Generate Password" onClick="populateform(this.form.thelength.value);" class="controls btn btn-primary"/>
+  <input type="button" value="Generate Password" onClick="populateform(this.form.thelength.value);" class="controls btn"/>
 </div>
   <div class="control-group">
     <%= f.label :encrypted_password, :class => 'control-label' %>
