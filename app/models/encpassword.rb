@@ -1,11 +1,12 @@
 require 'openssl'
 require 'base64'
+
 class Encpassword < ActiveRecord::Base
   attr_accessor :password, :master_password #this creates the virtual attributes password
   attr_accessible :encrypted_password, :service, :password, :master_password
   belongs_to :user
-<<<<<<< HEAD
-  validates :service, :presence => true
+
+  validates :service, :presence => true, :length => {:maximum => 50} 
   before_save :encrypt
     #this ensures that before you save the password to the databse,
     #the method encrypt_password is called
@@ -15,7 +16,7 @@ class Encpassword < ActiveRecord::Base
     data = :password;
     key = :master_password;
     
-    self.encrypted_password = aes_encrypt(data,key,nil,cipher_type).to_s
+    self.encrypted_password = aes_encrypt(data,key.to_s,nil,cipher_type).to_s
    
   end
   
@@ -42,11 +43,9 @@ class Encpassword < ActiveRecord::Base
  def aes_encrypt(data, key, iv, cipher_type)
     aes = OpenSSL::Cipher::Cipher.new(cipher_type)
     aes.encrypt
-  
-    key = OpenSSL::PKCS5.pbkdf2_hmac_sha1(key, "randomString", 1024, aes.key_len)
-    aes.key = key
+    aes.key = OpenSSL::PKCS5.pbkdf2_hmac_sha1(key, "randomString", 1024, aes.key_len)
     aes.iv = iv if iv != nil
-     aes.update(data) + aes.final      
+    aes.update(data.to_s) + aes.final    
   end
   # Decrypts a block of data (encrypted_data) given an encryption key
   # and an initialization vector (iv).  Keys, iv's, and the data 
@@ -68,11 +67,6 @@ class Encpassword < ActiveRecord::Base
     aes.key = key
     aes.iv = iv if iv != nil
     aes.update(encrypted_data) + aes.final  
-  end
-=======
-  
-  
-    #VALIDATIONS
-  validates :service, :presence => true, :length => {:maximum => 50} 
->>>>>>> 9de83427d823e3a1c0a79b510134d7014ce54132
+ end
 end
+

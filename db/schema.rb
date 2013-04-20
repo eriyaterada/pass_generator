@@ -11,11 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20130420040721) do
-=======
-ActiveRecord::Schema.define(:version => 20130419202047) do
->>>>>>> 9de83427d823e3a1c0a79b510134d7014ce54132
 
 # Could not dump table "Encpasswords" because of following StandardError
 #   Unknown type 'Symbol' for column 'encrypted_password'
