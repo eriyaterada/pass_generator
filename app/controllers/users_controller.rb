@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   @user = User.new(params[:user]) #this creates a new User object with the parameters entered in the form
   
   if (@user.save)
-    @display_message = flash[:notice] = 'Your account has been successfully created. You may now login.'
+    @display_message = flash[:success] = 'Your account has been successfully created. You may now login.'
     redirect_to :controller => 'sessions', :action => 'new'
   else
     render 'new'

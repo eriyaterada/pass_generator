@@ -14,11 +14,6 @@
 <%= f.label :password %> 
 <%= f.password_field :password, :id => "passwordField" %> <br />
 
-<div id="warning">
-	<%= flash.now[:error] %>
-	<p><%= flash[:notice] %></p>
-</div>
-
 <%= f.submit "Login", :id => "submit", :class => "btn btn-primary btn-large" %> <br />
 <% end %>
 

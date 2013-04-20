@@ -7,9 +7,9 @@
 
 <% if @user.errors.any? %>
   <div id="error_explanation">
-    <h2><%= pluralize(@user.errors.count, "error") %> 
-        prohibited this info from being saved:</h2>
-    <p>There were problems with the following fields:</p>
+    <div class="alert alert-error">
+      The form contains <%= pluralize(@user.errors.count, "error") %>.
+    </div>
     <ul>
     <% @user.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
@@ -18,24 +18,19 @@
   </div>
 <% end %>
 
-
-
-
-<div class = "centerize">
 <%= form_for @user, :action => :create do |f| %>
 
-<%= f.label :email %> <br />
-<%= f.text_field :email %> <br />
+<%= f.label :email %>
+<%= f.text_field :email %>
 
-<%= f.label :password %> <br />
-<%= f.text_field :password %> <br />
+<%= f.label :password %>
+<%= f.text_field :password %>
 
-<%= f.label :password_confirmation %> <br />
+<%= f.label :password_confirmation %>
 <%= f.text_field :password_confirmation %> <br />
 
 
 
-<%= f.submit "Submit" %> <br />
+<%= f.submit "Submit", :id => "submit", :class => "btn btn-primary btn-large" %> <br />
 
 <% end %>
-</div>

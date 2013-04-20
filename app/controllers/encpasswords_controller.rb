@@ -84,10 +84,8 @@ class EncpasswordsController < ApplicationController
     end
   end
   
- 
   def current_user
-    #@current_user ||= user_from_remember_token
-    @current_user = session[:user]
+    @current_user = User.find_by_id(session[:remember_token])
   end
   
   def user_from_remember_token

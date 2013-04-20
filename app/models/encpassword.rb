@@ -4,6 +4,7 @@ class Encpassword < ActiveRecord::Base
   attr_accessor :password, :master_password #this creates the virtual attributes password
   attr_accessible :encrypted_password, :service, :password, :master_password
   belongs_to :user
+<<<<<<< HEAD
   validates :service, :presence => true
   before_save :encrypt
     #this ensures that before you save the password to the databse,
@@ -68,4 +69,10 @@ class Encpassword < ActiveRecord::Base
     aes.iv = iv if iv != nil
     aes.update(encrypted_data) + aes.final  
   end
+=======
+  
+  
+    #VALIDATIONS
+  validates :service, :presence => true, :length => {:maximum => 50} 
+>>>>>>> 9de83427d823e3a1c0a79b510134d7014ce54132
 end
