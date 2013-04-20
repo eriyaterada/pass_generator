@@ -1,4 +1,114 @@
+<script type="text/javascript">
+
+var keyLow = "abcdefghijklmnopqrstuvwxyz";
+var keyUps = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var keyNums = "1234567890";
+var keySpec = "!@#$%^&*()-_=+<>\/?<>[]{}|";
+var temp = "";
+var keys = "";
+
+function generatepass(plength){
+	temp = "";
+	var lows = 0;
+	var ups = 0;
+	var nums = 0;
+	var specs = 0;
+	
+	if(document.getElementById("keyLow").checked==true){
+		keys = keyLow;
+		while(lows ==0){
+			lows = Math.round(Math.random()*(plength/3));
+		}
+	}
+	
+	for (j=0;j<lows;j++){
+		temp += keyLow.charAt(Math.round(Math.random()*keyLow.length));
+	}
+	
+	if(document.getElementById("keyUps").checked==true){
+		keys = keyUps; 
+		while(ups ==0){
+			ups = Math.round(Math.random()*(plength/3));
+		}
+	}
+	
+	for (j=0;j<ups;j++){
+		temp += keyUps.charAt(Math.round(Math.random()*keyUps.length));
+	}
+	
+	
+	
+	
+	if(document.getElementById("keyNums").checked==true){
+		keys = keyNums;
+		while(nums ==0){
+			nums = Math.round(Math.random()*(plength/3));
+		}
+	}
+	
+	for (j=0;j<nums;j++){
+		temp += keyNums.charAt(Math.round(Math.random()*keyNums.length));
+	}
+	
+	if(document.getElementById("keySpec").checked==true){
+		keys = keySpec;
+		while(specs==0){
+			specs = Math.round(Math.random()*(plength/3));
+		}
+	}
+	
+	for (k=0;k<specs;k++){
+		temp += keySpec.charAt(Math.round(Math.random()*keySpec.length));
+	}
+	
+	for (i=0;i<(plength-nums-specs-lows-ups);i++){
+		temp += keys.charAt(Math.floor(Math.random()*keys.length));
+	}
+	
+	var shuffled = temp.split('').sort(function(){return 0.5-Math.random()}).join('');
+	return shuffled;
+}
+
+function populateform(enterlength){
+	document.getElementById("encpassword_encrypted_password").value=generatepass(enterlength);
+}
+</script>
+
 <%= form_for @encpassword, :html => { :class => 'form-horizontal' } do |f| %>
+<div class="control-group">
+    <label class = "control-label">Enter Desired Length for Password :</label>
+    <div class="controls">
+      <input type="text" name="thelength" id="thelength" size=3 value="7" class="text_field"/>
+    </div>
+  </div>
+
+<div class="control-group">
+    <label class = "control-label">Include Lower Case ? </label>
+    <div class="controls">
+		<input type="checkbox" id="keyLow" name="keyLow"  class="text_field"/>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class = "control-label">Include Upper Case ? </label>
+    <div class="controls">
+		<input type="checkbox" id="keyUps" name="keyUps"  class="text_field"/>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class = "control-label">Include Numbers ?</label>
+    <div class="controls">
+		<input type="checkbox" id="keyNums" name="keyNums"  class="text_field"/>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class = "control-label">Include Special Characters ? </label>
+    <div class="controls">
+		<input type="checkbox" id="keySpec" name="keySpec"  class="text_field"/>
+    </div>
+  </div>
+  <div class="control-group">
+  <input type="button" value="Generate Password" onClick="populateform(this.form.thelength.value);" class="btn btn-primary"/>
+</div>
   <div class="control-group">
     <%= f.label :encrypted_password, :class => 'control-label' %>
     <div class="controls">
@@ -6,9 +116,9 @@
     </div>
   </div>
   <div class="control-group">
-      <%= f.label :service, :class => 'control-label' %>
+    <%= f.label :service, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :service, :class => 'text_field'%>
+      <%= f.text_field :service, :class => 'text_field' %>
     </div>
   </div>
 

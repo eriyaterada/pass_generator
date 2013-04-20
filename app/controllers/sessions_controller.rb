@@ -13,8 +13,7 @@ class SessionsController < ApplicationController
       render 'new'
     else
       session[:remember_token] = user.id #this stores the id of the user logged in the session
-      session[:user] = user
-      @current_user = session[:user]
+      @current_user = User.find_by_id(session[:remember_token])
       redirect_to :controller => 'encpasswords', :action => 'index'
     end
   end
