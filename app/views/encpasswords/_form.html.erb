@@ -82,32 +82,36 @@ function populateform(enterlength){
     </div>
   </div>
 
-<div class="control-group">
-    <label class = "control-label">Include Lower Case ? </label>
-    <div class="controls">
-		<input type="checkbox" id="keyLow" name="keyLow"  class="text_field"/>
-    </div>
-  </div>
   <div class="control-group">
-    <label class = "control-label">Include Upper Case ? </label>
-    <div class="controls">
-		<input type="checkbox" id="keyUps" name="keyUps"  class="text_field"/>
-    </div>
+	    <label class = "checkbox controls">
+	    	Include Lower Case ?
+			<input type="checkbox" id="keyLow" name="keyLow"  class="text_field"/>
+	    </label>
   </div>
+  
   <div class="control-group">
-    <label class = "control-label">Include Numbers ?</label>
-    <div class="controls">
-		<input type="checkbox" id="keyNums" name="keyNums"  class="text_field"/>
-    </div>
+	    <label class = "checkbox controls">
+	    	Include Upper Case ?
+			<input type="checkbox" id="keyUps" name="keyUps"  class="text_field"/>
+	    </label>
   </div>
+  
   <div class="control-group">
-    <label class = "control-label">Include Special Characters ? </label>
-    <div class="controls">
-		<input type="checkbox" id="keySpec" name="keySpec"  class="text_field"/>
-    </div>
+	    <label class = "checkbox controls">
+	    	Include Numbers ?
+			<input type="checkbox" id="keyNums" name="keyNums"  class="text_field"/>
+	    </label>
   </div>
+
   <div class="control-group">
-  <input type="button" value="Generate Password" onClick="populateform(this.form.thelength.value);" class="btn btn-primary"/>
+	    <label class = "checkbox controls">
+	    	Include Special Characters ?
+			<input type="checkbox" id="keySpec" name="keySpec"  class="text_field"/>
+	    </label>
+  </div>
+
+  <div class="control-group">
+  <input type="button" value="Generate Password" onClick="populateform(this.form.thelength.value);" class="controls btn btn-primary"/>
 </div>
   <div class="control-group">
     <%= f.label :encrypted_password, :class => 'control-label' %>
@@ -123,7 +127,7 @@ function populateform(enterlength){
   </div>
 
   <div class="form-actions">
-    <%= f.submit "Save Password", :class => 'btn btn-primary' %>
+    <%= f.submit nil, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 encpasswords_path, :class => 'btn' %>
   </div>
