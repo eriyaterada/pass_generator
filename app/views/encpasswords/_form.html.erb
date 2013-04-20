@@ -70,7 +70,7 @@ function generatepass(plength){
 }
 
 function populateform(enterlength){
-	document.getElementById("encpassword_encrypted_password").value=generatepass(enterlength);
+	document.getElementById("encpassword_password").value=generatepass(enterlength);
 }
 </script>
 
@@ -116,7 +116,13 @@ function populateform(enterlength){
   <div class="control-group">
     <%= f.label :encrypted_password, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :encrypted_password, :class => 'text_field' %>
+      <%= f.text_field :password, :class => 'text_field' %>
+    </div>
+  </div>
+    <div class="control-group">
+    <%= f.label :user_password, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :master_password, :class => 'text_field' %>
     </div>
   </div>
   <div class="control-group">

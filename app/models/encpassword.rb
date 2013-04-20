@@ -13,8 +13,8 @@ class Encpassword < ActiveRecord::Base
     
   def encrypt()
     cipher_type = "aes-128-ecb"
-    data = :password;
-    key = ":master_password";
+    data = password;
+    key = master_password;
     
     self.encrypted_password = aes_encrypt(data,key.to_s,nil,cipher_type).to_s
    
