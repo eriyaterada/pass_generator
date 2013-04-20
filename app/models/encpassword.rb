@@ -2,7 +2,7 @@ require 'openssl'
 require 'base64'
 
 class Encpassword < ActiveRecord::Base
-  attr_accessor :password, :master_password #this creates the virtual attributes password
+  attr_accessor :password, :master_password #this creates the virtual attributes password and master_password
   attr_accessible :encrypted_password, :service, :password, :master_password
   belongs_to :user
 
@@ -14,7 +14,7 @@ class Encpassword < ActiveRecord::Base
   def encrypt()
     cipher_type = "aes-128-ecb"
     data = :password;
-    key = :master_password;
+    key = ":master_password";
     
     self.encrypted_password = aes_encrypt(data,key.to_s,nil,cipher_type).to_s
    
