@@ -11,15 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130419203914) do
+ActiveRecord::Schema.define(:version => 20130420040721) do
 
-  create_table "encpasswords", :force => true do |t|
-    t.string   "encrypted_password"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-    t.integer  "user_id"
-    t.string   "service"
-  end
+# Could not dump table "Encpasswords" because of following StandardError
+#   Unknown type 'Symbol' for column 'encrypted_password'
 
   create_table "passwords", :force => true do |t|
     t.string   "encrypted_password"
