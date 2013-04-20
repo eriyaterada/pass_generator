@@ -5,7 +5,7 @@ class EncpasswordsController < ApplicationController
   # GET /encpasswords
   # GET /encpasswords.json
   def index
-    @encpasswords = @current_user.encpasswords.all
+    @encpasswords = current_user.encpasswords.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -82,6 +82,10 @@ class EncpasswordsController < ApplicationController
       format.html { redirect_to encpasswords_url }
       format.json { head :no_content }
     end
+  end
+  
+  def current_user
+    @current_user = User.find_by_id(session[:remember_token])
   end
   
   def user_from_remember_token
