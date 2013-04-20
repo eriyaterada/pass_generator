@@ -6,7 +6,9 @@ class Encpassword < ActiveRecord::Base
   attr_accessible :encrypted_password, :service, :password, :master_password
   belongs_to :user
 
-  validates :service, :presence => true, :length => {:maximum => 50} 
+  validates :service, :presence => true, :length => {:maximum => 50}
+  validates :password, :presence => true
+  validates :master_password, :presence => true
   before_save :encrypt
     #this ensures that before you save the password to the databse,
     #the method encrypt_password is called

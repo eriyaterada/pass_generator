@@ -13,7 +13,7 @@
     <td><%= password.encrypted_password %></td>
     <td><%= link_to 'Show', password %></td>
     <td><%= link_to 'Edit', edit_password_path(password) %></td>
-    <td><%= link_to 'Destroy', password, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= button_to 'Destroy', password, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

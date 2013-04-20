@@ -74,6 +74,22 @@ function populateform(enterlength){
 }
 </script>
 
+
+<% if @encpassword.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-error">
+      The form contains <%= pluralize(@encpassword.errors.count, "error") %>.
+    </div>
+    <ul>
+    <% @encpassword.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+
 <%= form_for @encpassword, :html => { :class => 'form-horizontal' } do |f| %>
 <div class="control-group">
     <label class = "control-label">Enter Desired Length for Password :</label>
@@ -114,14 +130,15 @@ function populateform(enterlength){
   <input type="button" value="Generate Password" onClick="populateform(this.form.thelength.value);" class="controls btn"/>
 </div>
   <div class="control-group">
-    <%= f.label :encrypted_password, :class => 'control-label' %>
+    <%= f.label :password, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :password, :class => 'text_field' %>
     </div>
   </div>
-    <div class="control-group">
-    <%= f.label :user_password, :class => 'control-label' %>
+  <div class="control-group">
+    <%= f.label :master_password, :class => 'control-label' %>
     <div class="controls">
+
       <%= f.text_field :master_password, :class => 'text_field' %>
     </div>
   </div>
@@ -133,7 +150,7 @@ function populateform(enterlength){
   </div>
 
   <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= f.submit "Save Password", :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 encpasswords_path, :class => 'btn' %>
   </div>
