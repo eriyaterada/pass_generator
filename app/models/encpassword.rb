@@ -6,15 +6,17 @@ class Encpassword < ActiveRecord::Base
   attr_accessible :encrypted_password, :service, :password, :master_password
   belongs_to :user
 
-  validates :service, :presence => true, :length => {:maximum => 50} 
+  validates :service, :presence => true, :length => {:maximum => 50}
+  validates :password, :presence => true
+  validates :master_password, :presence => true
   before_save :encrypt
     #this ensures that before you save the password to the databse,
     #the method encrypt_password is called
     
   def encrypt()
     cipher_type = "aes-128-ecb"
-    data = :password;
-    key = ":master_password";
+    data = password;
+    key = master_password;
     
     self.encrypted_password = aes_encrypt(data,key.to_s,nil,cipher_type).to_s
    
