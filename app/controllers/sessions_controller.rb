@@ -26,11 +26,10 @@ class SessionsController < ApplicationController
   end
   
   
-  
+  %%
   
   def current_user
     @current_user ||= user_from_remember_token
-
   end
   
   private
@@ -44,5 +43,5 @@ class SessionsController < ApplicationController
     end
 
 
-
+%
 end
