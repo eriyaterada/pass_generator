@@ -1,6 +1,6 @@
 <%- model_class = Encpassword -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+  <h1>Your encrypted passwords:</h1>
 </div>
 
 <% unless @encpasswords.empty? %>
@@ -20,7 +20,12 @@
       <tr>
         <td><%= link_to encpassword.id, encpassword_path(encpassword) %></td>
         <td><%= encpassword.encrypted_password %></td>
-        <td><%= encpassword.service %></td>
+        <td>
+        	<%= if encpassword.service_url
+        		link_to encpassword.service, encpassword.service_url
+        		else encpassword.service 
+        		end %>
+        	</td>
         <td><%=l encpassword.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),

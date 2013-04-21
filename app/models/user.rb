@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
   validates :password, :presence => true, :confirmation => true, :length => {:within =>8...32}, :format => {:with => passowrd_regex}
 
   
+  before_create { generate_token(:auth_token)}
+  
   before_save :encrypt_password
     #this ensures that before you save the password to the databse,
     #the method encrypt_password is called
@@ -52,5 +54,18 @@ public
       return nil if user.nil?
       return user if user.has_password?(submitted_password)
    end
+   
+   def send_password_reset
+     generate_token(:password_reset_token)
+     self.password_reset_sent_at = Time.zone.now
+     save!(validate: false)
+     UserMailer.password_reset(self).deliver  
+   end
+   
+   def generate_token(column)
+  begin
+    self[column] = SecureRandom.urlsafe_base64
+  end while User.exists?(column => self[column])
+end
    
 end
