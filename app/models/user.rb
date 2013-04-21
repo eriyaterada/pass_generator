@@ -48,13 +48,17 @@ public
    end
 
 
-
+   # Authenticates user
+   # :return: => user object or nil
+   # :arg: email => String
+   # :arg: submitted_password => String
    def self.authenticate(email, submitted_password)
       user = find_by_email(email)
       return nil if user.nil?
       return user if user.has_password?(submitted_password)
    end
    
+   # sends a password reset email to the user
    def send_password_reset
      generate_token(:password_reset_token)
      self.password_reset_sent_at = Time.zone.now
@@ -63,9 +67,9 @@ public
    end
    
    def generate_token(column)
-  begin
-    self[column] = SecureRandom.urlsafe_base64
-  end while User.exists?(column => self[column])
+     begin
+     self[column] = SecureRandom.urlsafe_base64
+   end while User.exists?(column => self[column])
 end
    
 end
