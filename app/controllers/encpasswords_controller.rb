@@ -12,7 +12,7 @@ class EncpasswordsController < ApplicationController
   # GET /encpasswords.json
   def index
     @encpasswords = current_user.encpasswords.all
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @encpasswords }
@@ -105,7 +105,7 @@ class EncpasswordsController < ApplicationController
     end
   end
   def decrypt
-    @encpassword = Encpassword.find_all_by_service(params[:selectService])
+    decrypted_password = Encpassword.decrypt(params[:service],params[:master_password])
   end
   def current_user
     @current_user = User.find_by_id(session[:remember_token])
