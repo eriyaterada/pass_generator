@@ -61,6 +61,7 @@ $(document).ready(function(){
 
         <td><%= link_to encpassword.id, encpassword_path(encpassword) %></td>
         <td  style="display:none;"><%= encpassword.encrypted_password %></td>
+        
         <td>
         	<%= if encpassword.service_url
         		link_to encpassword.service, encpassword.service_url
