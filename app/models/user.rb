@@ -55,6 +55,7 @@ public
    def secure_hash(string)
       Digest::SHA2.hexdigest(string)
    end
+   
   # this method determines if the current user has a valid password
   # :arg: encrypted_password: => string
   # :arg: submitted_password => string
@@ -62,6 +63,7 @@ public
    def has_password?(submitted_password)
       encrypted_password == encrypt(submitted_password)
    end
+
 
 
    # this method authenticates user
@@ -81,6 +83,14 @@ public
      save!(validate: false)
      UserMailer.password_reset(self).deliver
    end
+
+   
+   def generate_token(column)
+     begin
+     self[column] = SecureRandom.urlsafe_base64
+   end while User.exists?(column => self[column])
+end
+
   # this method generates a token 
   def generate_token(column)
     begin

@@ -116,7 +116,7 @@ class EncpasswordsController < ApplicationController
 
     respond_to do |format|
       if @encpassword.update_attributes(params[:encpassword])
-        format.html { redirect_to @encpassword, notice: 'Encpassword was successfully updated.' }
+        format.html { redirect_to "/encpasswords", notice: 'Your password for ' + @encpassword.service + ' was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -156,6 +156,8 @@ class EncpasswordsController < ApplicationController
       @decrypted_password = Encpassword.decrypt(params[:service],params[:Master_Password])
     end
   end
+  
+
   #this method return the current user
   #return => User
   #session[:remember_token] => string
