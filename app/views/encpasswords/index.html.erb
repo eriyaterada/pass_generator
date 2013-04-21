@@ -1,42 +1,3 @@
-<link rel="stylesheet" href="/css/encpassword.css">
-<script type="text/javascript" src="/js/jquery.js"></script>
-<script type="text/javascript" src="/js/tipswindown.js"></script>
-<script type="text/javascript">
-
-
-function showTipsWindown(title,id,width,height){
-	tipsWindown(title,"id:"+id,width,height,"true","","true",id);
-}
-
-function confirmTerm(s) {
-	parent.closeWindown();
-	if(s == 1) {
-		parent.document.getElementById("isread").checked = true;
-	}
-}
-
-
-
-
-
-function popTips(service_name){
-
-	showTipsWindown("jquery", 'simTestContent', 600, 255);
-	$("#isread").attr("checked", false);
-	document.getElementById("service1").value = service_name;
-
-}
-
-$(document).ready(function(){
-
-	//$(".isread-text").click(popTips);
-
-});
-
-
-
-</script>
-
 <%- model_class = Encpassword -%>
 <div class="page-header">
   <h1>Your encrypted passwords:</h1>
@@ -48,6 +9,7 @@ $(document).ready(function(){
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:service) %></th>
+      <th> </th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
@@ -55,31 +17,23 @@ $(document).ready(function(){
   <tbody>
     <% @encpasswords.each do |encpassword| %>
       <tr>
-
-        
-
         <td>
         	<%= if encpassword.service_url
         		link_to encpassword.service, encpassword.service_url
         		else encpassword.service 
         		end %>
         	</td>
+        	<td><a href="#myModal" role="button" class="btn btn-warning" data-toggle="modal" onclick="myfunc(this.id)" id=<%= encpassword.service %>>View Password</a></td>
         <td><%=l encpassword.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_encpassword_path(encpassword), :class => 'btn btn-mini' %>
-          <%= button_to t('.destroy', :default => t("helpers.links.destroy")),
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       encpassword_path(encpassword),
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-mini btn-danger' %>
- 
         </td>
-      </tr>
-      <tr>
-      	<td class="agree">
-			<input type="button" class="isread-text" id=<%= encpassword.service %>  value="view password" onClick="popTips(this.id)"></input>
-		</td><!--agree end-->
       </tr>
     <% end %>
   </tbody>
@@ -100,13 +54,14 @@ $(document).ready(function(){
 
 
 
-<div style="display:none">
-
-	<div id="simTestContent" class="simScrollCont">
-
-		<div class="mainlist">
-			<div class="control-group">
-		    	<div>
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Enter Master Password...</h3>
+  </div>
+  <div class="modal-body">
+  	
 		    		<%= form_tag({:controller => "encpasswords", :action => "decrypt"})  do%>
 
 					<%= label_tag( "Master Password") %>
@@ -115,24 +70,9 @@ $(document).ready(function(){
 
 
 					<%= label_tag("Service Name") %>
-					<%= text_field_tag "service" %>
+					<%= text_field_tag "service" %><br />
 					<%= submit_tag ("Submit"), :id => "submit", :class => "btn btn-primary btn-large" 	 %>
 
-	   <% end %>
-		    	</div>
-	  		</div>
-
-		</div>
-
-		<table>
-			<tr>
-		<td ><input type="button" id="confirmTerm" value="accept" onClick="confirmTerm(1);" class="confirmBtn"/></td>
-		<td ><input type="button" id="confirmTerm" value="close" onClick="confirmTerm(1);" class="confirmBtn"/></td>
-		</tr>
-		</table>
-	</div><!--simTestContent end-->
-
+	<% end %>
+  </div>
 </div>
-<div >
-					<%= text_field_tag "service1" %>
-	 		</div>
