@@ -1,3 +1,36 @@
+<link rel="stylesheet" href="/css/encpassword.css">
+<script type="text/javascript" src="http://www.jsfoot.com/skin/js/jquery.js"></script>
+<script type="text/javascript" src="/js/tipswindown.js"></script>
+<script type="text/javascript">
+
+
+function showTipsWindown(title,id,width,height){
+	tipsWindown(title,"id:"+id,width,height,"true","","true",id);
+}
+
+function confirmTerm(s) {
+	parent.closeWindown();
+	if(s == 1) {
+		parent.document.getElementById("isread").checked = true;
+	}
+}
+
+
+
+function popTips(){
+
+	showTipsWindown("jquery", 'simTestContent', 600, 255);
+	$("#isread").attr("checked", false);
+}
+
+$(document).ready(function(){
+	
+	$("#isread").click(popTips);
+	$(".isread-text").click(popTips);
+	
+});
+</script>
+
 <%- model_class = Encpassword -%>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
@@ -8,8 +41,8 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:encrypted_password) %></th>
+    
+      
       <th><%= model_class.human_attribute_name(:service) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -18,20 +51,26 @@
   <tbody>
     <% @encpasswords.each do |encpassword| %>
       <tr>
-        <td><%= link_to encpassword.id, encpassword_path(encpassword) %></td>
-        <td><%= encpassword.encrypted_password %></td>
-        <td><%= encpassword.service %></td>
+        
+  		<td class="agree">
+			<label class="isread-text">  <%= encpassword.service %></label>
+		</td><!--agree end-->
+   	 
+        
         <td><%=l encpassword.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_encpassword_path(encpassword), :class => 'btn btn-mini' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+          <%= button_to t('.destroy', :default => t("helpers.links.destroy")),
                       encpassword_path(encpassword),
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-mini btn-danger' %>
+ 
         </td>
       </tr>
+      <tr> <td><%= encpassword.encrypted_password %></td>
+      	</tr>
     <% end %>
   </tbody>
 </table>
@@ -47,3 +86,28 @@
 <%= link_to t('.new', :default => t("helpers.links.Create New Password")),
             new_encpassword_path,
             :class => 'btn btn-primary' %>
+
+
+
+			
+<div style="display:none;">
+
+	<div id="simTestContent" class="simScrollCont">
+	
+		<div class="mainlist">
+<div class="control-group">
+    <label>Master Password</label>
+    <div>
+      <input type="text" name="thelength" id="thelength" size=20 value="" class="text_field"/>
+    </div>
+  </div>
+		</div>
+		<table>
+			<tr>
+		<td ><input type="button" id="confirmTerm" value="accept" onClick="confirmTerm(1);" class="confirmBtn"/></td>
+		<td ><input type="button" id="confirmTerm" value="close" onClick="confirmTerm(1);" class="confirmBtn"/></td>
+		</tr>
+		</table>
+	</div><!--simTestContent end-->
+	
+</div>

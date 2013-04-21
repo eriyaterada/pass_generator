@@ -83,7 +83,9 @@ class EncpasswordsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+  def decrypt
+    @encpassword = Encpassword.find_all_by_service(params[:selectService])
+  end
   def current_user
     @current_user = User.find_by_id(session[:remember_token])
   end

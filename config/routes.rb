@@ -4,7 +4,7 @@ PassGenerator::Application.routes.draw do
   resources :passwords
 
   get "sessions/new"
-
+  get "encpasswords/decrypt"
   get "users/new"
     resources :users
 
