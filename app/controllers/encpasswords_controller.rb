@@ -1,5 +1,11 @@
 class EncpasswordsController < ApplicationController
+  before_filter :authorize
+  
   def authorize
+    unless User.find_by_id(session[:remember_token])
+      flash[:notice] = "Please login"
+      redirect_to :controller => 'sessions', :action => 'new'
+    end
   end
   
   # GET /encpasswords
@@ -16,11 +22,17 @@ class EncpasswordsController < ApplicationController
   # GET /encpasswords/1
   # GET /encpasswords/1.json
   def show
+    if current_user.encpasswords.find_by_id(params[:id])
+    
     @encpassword = Encpassword.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @encpassword }
+    end
+    else
+       flash[:notice] = "YOU DO NOT HAVE THE RIGHTS TO VIEW THIS PAGE"
+      redirect_to :controller => 'encpasswords', :action => 'index'
     end
   end
 
@@ -44,7 +56,14 @@ class EncpasswordsController < ApplicationController
   # POST /encpasswords.json
   def create
     @encpassword  = current_user.encpasswords.build(params[:encpassword])
-
+    
+    user = User.authenticate(User.find(session[:remember_token]).email, params[:encpassword][:master_password])
+    if user.nil?
+      flash.now[:error] = "Master password is incorrect"
+      render 'new'
+      
+      
+    else
     respond_to do |format|
       if @encpassword.save
         format.html { redirect_to @encpassword, notice: 'Encpassword was successfully created.' }
@@ -53,6 +72,8 @@ class EncpasswordsController < ApplicationController
         format.html { render action: "new" }
         format.json { render json: @encpassword.errors, status: :unprocessable_entity }
       end
+    end
+    
     end
   end
 

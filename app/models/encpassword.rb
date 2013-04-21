@@ -3,7 +3,7 @@ require 'base64'
 
 class Encpassword < ActiveRecord::Base
   attr_accessor :password, :master_password #this creates the virtual attributes password and master_password
-  attr_accessible :encrypted_password, :service, :password, :master_password
+  attr_accessible :encrypted_password, :service, :service_url, :password, :master_password
   belongs_to :user
 
   validates :service, :presence => true, :length => {:maximum => 50}
@@ -18,8 +18,7 @@ class Encpassword < ActiveRecord::Base
     data = password;
     key = master_password;
     
-    self.encrypted_password = aes_encrypt(data,key.to_s,nil,cipher_type).to_s
-   
+    self.encrypted_password = aes_encrypt(data,key,nil,cipher_type).to_s
   end
   
   def decrypt(service_name,key)
