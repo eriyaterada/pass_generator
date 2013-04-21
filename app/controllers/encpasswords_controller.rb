@@ -1,10 +1,20 @@
 class EncpasswordsController < ApplicationController
-  before_filter :authorize
+  before_filter :authorize, :check_session
   
   def authorize
-    unless User.find_by_id(session[:remember_token])
-      flash[:notice] = "Please login"
-      redirect_to :controller => 'sessions', :action => 'new'
+      unless User.find_by_id(session[:remember_token])
+        flash[:notice] = "Please login"
+        redirect_to :controller => 'sessions', :action => 'new'
+    end
+  end
+  
+  def check_session
+    # if a session's expiration time it is old, sign the user out by force
+    if session[:expire_time] < Time.now
+      redirect_to '/signout'
+    else
+    # otherwise, reset the session's expiration time to 10 minutes into the future
+      session[:expire_time] = 10.minutes.since
     end
   end
   
@@ -106,7 +116,15 @@ class EncpasswordsController < ApplicationController
     end
   end
   def decrypt
+      user = User.authenticate(User.find(session[:remember_token]).email, params[:Master_Password])
+      if user.nil?
+        
+        redirect_to :controller => 'encpasswords', :action => 'index'
+      flash[:error] = "Master password is incorrect"
+      
+    else
       @decrypted_password = Encpassword.decrypt(params[:service],params[:Master_Password])
+    end
   end
   def current_user
     @current_user = User.find_by_id(session[:remember_token])

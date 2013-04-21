@@ -58,20 +58,25 @@
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Enter Master Password...</h3>
+    <h3 id="myModalLabel">Enter your master password...</h3>
+    <p>We need you to type in your master password because we don't know it!</p>
   </div>
   <div class="modal-body">
   	
 		    		<%= form_tag({:controller => "encpasswords", :action => "decrypt"})  do%>
 
-					<%= label_tag( "Master Password") %>
+					
 					<%= password_field_tag "Master_Password" %>
 
 
-
+					<div style="display:none;">
 					<%= label_tag("Service Name") %>
-					<%= text_field_tag "service" %><br />
+					<%= text_field_tag "service" %>
+					</div>
+					
+					<br />
 					<%= submit_tag ("Submit"), :id => "submit", :class => "btn btn-primary btn-large" 	 %>
+					<button class="btn btn-large" data-dismiss="modal" aria-hidden="true">Close</button>
 
 	<% end %>
   </div>

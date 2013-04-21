@@ -1,8 +1,4 @@
-<% def authorize %>
-<% end %>
-
 <h1>Please fill in the form to sign up</h1>
-
 
 
 <% if @user.errors.any? %>
@@ -17,20 +13,25 @@
     </ul>
   </div>
 <% end %>
-
-<%= form_for @user, :action => :create do |f| %>
-
-<%= f.label :email %>
-<%= f.text_field :email %>
-
-<%= f.label :password %>
-<%= f.password_field :password %>
-
-<%= f.label :password_confirmation %>
-<%= f.password_field :password_confirmation %> <br />
-
-
-
-<%= f.submit "Submit", :id => "submit", :class => "btn btn-primary btn-large" %> <br />
-
-<% end %>
+	
+	<div class="span3">
+		<%= form_for @user, :class => "well", :action => :create do |f| %>
+		
+		<%= f.label :email %>
+		<%= f.text_field :email %>
+		
+		<%= f.label :password %>
+		<%= f.password_field :password %>
+		
+		<%= f.label :password_confirmation %>
+		<%= f.password_field :password_confirmation %> <br />
+		
+			
+			<%= link_to t('.back', :default => t("helpers.links.back")), encpasswords_path, :class => 'btn btn-large'  %>
+			<%= f.submit "Submit", :id => "submit", :class => "btn btn-primary btn-large" %>
+		<% end %>
+	</div>
+	
+	<div class="span3" style="margin-top:65px">
+		<p>The password should contain at least one upper-case letter, one lower-case letter, one special character, one digit, and has to be at least 8 characters long.</p>
+	</div>
