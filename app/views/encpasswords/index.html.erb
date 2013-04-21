@@ -19,10 +19,10 @@
       <tr>
         <td>
         	<%= if encpassword.service_url
-        		link_to encpassword.service, encpassword.service_url
+        			link_to encpassword.service, encpassword.service_url
         		else encpassword.service 
         		end %>
-        	</td>
+        </td>
         	<td><a href="#myModal" role="button" class="btn btn-warning" data-toggle="modal" onclick="myfunc(this.id)" id=<%= encpassword.service %>>View Password</a></td>
         <td><%=l encpassword.created_at %></td>
         <td>
@@ -65,7 +65,7 @@
 		    		<%= form_tag({:controller => "encpasswords", :action => "decrypt"})  do%>
 
 					<%= label_tag( "Master Password") %>
-					<%= text_field_tag "Master_Password" %>
+					<%= password_field_tag "Master_Password" %>
 
 
 

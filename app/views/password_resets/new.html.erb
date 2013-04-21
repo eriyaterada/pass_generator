@@ -1,9 +1,13 @@
-<h1>PasswordResets#new</h1>
+<h1>Reset your password</h1>
+<p>Please type in your email address below and hit "Reset Password" to receive an email containing a URL to reset your password. The URL will be valid for 2 hours.</p>
 
 <%= form_tag password_resets_path, :method => :post do %>
   <div class="field">
     <%= label_tag :email %>
     <%= text_field_tag :email, params[:email] %>
   </div>
-  <div class="actions"><%= submit_tag "Reset Password" %></div>
+  <div class="actions">
+  	<%= submit_tag "Reset Password", :class => "btn btn-primary"%>
+  	<%= link_to 'Back', '/', :class => 'btn'  %>
+  </div>
 <% end %>
