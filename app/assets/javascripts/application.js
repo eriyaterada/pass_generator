@@ -15,6 +15,5 @@
 //= require twitter/bootstrap
 //= require_tree .
 function myfunc(service_name){
-	web_service = service_name	
 	document.getElementById("service").value = service_name;
 }

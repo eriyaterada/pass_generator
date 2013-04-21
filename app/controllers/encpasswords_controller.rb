@@ -67,7 +67,7 @@ class EncpasswordsController < ApplicationController
     else
     respond_to do |format|
       if @encpassword.save
-        format.html { redirect_to @encpassword, notice: 'Encpassword was successfully created.' }
+        format.html { redirect_to "/encpasswords", notice: 'Encpassword was successfully created.' }
         format.json { render json: @encpassword, status: :created, location: @encpassword }
       else
         format.html { render action: "new" }

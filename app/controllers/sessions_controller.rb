@@ -1,9 +1,13 @@
 class SessionsController < ApplicationController
 
+
   def authorize
   end
   
   def new
+    if session[:remember_token]
+      redirect_to :controller => 'encpasswords', :action => 'index'
+    end
   end
 
   def create
@@ -21,8 +25,7 @@ class SessionsController < ApplicationController
     session[:remember_token] = nil
     session[:user] = nil
     flash[:notice] = "You have successfully signed out."
-    #redirect_to '/signin'
-    redirect_to root_path #takes you to root specified in routes.db
+    redirect_to '/signin'
   end
   
   
