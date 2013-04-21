@@ -51,23 +51,23 @@ $(document).ready(function(){
   <tbody>
     <% @encpasswords.each do |encpassword| %>
       <tr>
-<<<<<<< HEAD
+
         
   		<td class="agree">
 			<label class="isread-text">  <%= encpassword.service %></label>
 		</td><!--agree end-->
    	 
         
-=======
+
         <td><%= link_to encpassword.id, encpassword_path(encpassword) %></td>
-        <td><%= encpassword.encrypted_password %></td>
+        <td  style="display:none;"><%= encpassword.encrypted_password %></td>
         <td>
         	<%= if encpassword.service_url
         		link_to encpassword.service, encpassword.service_url
         		else encpassword.service 
         		end %>
         	</td>
->>>>>>> e1c9fe9778c076c872b34477a7f05fadf7ea0962
+
         <td><%=l encpassword.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
