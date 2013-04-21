@@ -8,6 +8,7 @@ PassGenerator::Application.routes.draw do
 
   get "sessions/new"
   get "encpasswords/decrypt"
+    post "encpasswords/decrypt"
   get "users/new"
   
     resources :users

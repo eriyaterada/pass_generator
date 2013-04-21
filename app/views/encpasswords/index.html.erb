@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="/css/encpassword.css">
-<script type="text/javascript" src="http://www.jsfoot.com/skin/js/jquery.js"></script>
+<script type="text/javascript" src="/js/jquery.js"></script>
 <script type="text/javascript" src="/js/tipswindown.js"></script>
 <script type="text/javascript">
 
@@ -17,18 +17,24 @@ function confirmTerm(s) {
 
 
 
-function popTips(){
+
+
+function popTips(service_name){
 
 	showTipsWindown("jquery", 'simTestContent', 600, 255);
 	$("#isread").attr("checked", false);
+	document.getElementById("service1").value = service_name;
+
 }
 
 $(document).ready(function(){
-	
-	$("#isread").click(popTips);
-	$(".isread-text").click(popTips);
-	
+
+	//$(".isread-text").click(popTips);
+
 });
+
+
+
 </script>
 
 <%- model_class = Encpassword -%>
@@ -41,8 +47,6 @@ $(document).ready(function(){
 <table class="table table-striped">
   <thead>
     <tr>
-    
-      
       <th><%= model_class.human_attribute_name(:service) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -53,22 +57,13 @@ $(document).ready(function(){
       <tr>
 
         
-  		<td class="agree">
-			<label class="isread-text">  <%= encpassword.service %></label>
-		</td><!--agree end-->
-   	 
-        
 
-        <td><%= link_to encpassword.id, encpassword_path(encpassword) %></td>
-        <td  style="display:none;"><%= encpassword.encrypted_password %></td>
-        
         <td>
         	<%= if encpassword.service_url
         		link_to encpassword.service, encpassword.service_url
         		else encpassword.service 
         		end %>
         	</td>
-
         <td><%=l encpassword.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
@@ -81,8 +76,11 @@ $(document).ready(function(){
  
         </td>
       </tr>
-      <tr> <td><%= encpassword.encrypted_password %></td>
-      	</tr>
+      <tr>
+      	<td class="agree">
+			<input type="button" class="isread-text" id=<%= encpassword.service %>  value="view password" onClick="popTips(this.id)"></input>
+		</td><!--agree end-->
+      </tr>
     <% end %>
   </tbody>
 </table>
@@ -101,19 +99,31 @@ $(document).ready(function(){
 
 
 
-			
-<div style="display:none;">
+
+<div style="display:none">
 
 	<div id="simTestContent" class="simScrollCont">
-	
+
 		<div class="mainlist">
-<div class="control-group">
-    <label>Master Password</label>
-    <div>
-      <input type="text" name="thelength" id="thelength" size=20 value="" class="text_field"/>
-    </div>
-  </div>
+			<div class="control-group">
+		    	<div>
+		    		<%= form_tag({:controller => "encpasswords", :action => "decrypt"})  do%>
+
+					<%= label_tag( "Master Password") %>
+					<%= text_field_tag "Master_Password" %>
+
+
+
+					<%= label_tag("Service Name") %>
+					<%= text_field_tag "service" %>
+					<%= submit_tag ("Submit"), :id => "submit", :class => "btn btn-primary btn-large" 	 %>
+
+	   <% end %>
+		    	</div>
+	  		</div>
+
 		</div>
+
 		<table>
 			<tr>
 		<td ><input type="button" id="confirmTerm" value="accept" onClick="confirmTerm(1);" class="confirmBtn"/></td>
@@ -121,5 +131,8 @@ $(document).ready(function(){
 		</tr>
 		</table>
 	</div><!--simTestContent end-->
-	
+
 </div>
+<div >
+					<%= text_field_tag "service1" %>
+	 		</div>

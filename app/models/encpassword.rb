@@ -21,7 +21,7 @@ class Encpassword < ActiveRecord::Base
     self.encrypted_password = aes_encrypt(data,key,nil,cipher_type).to_s
   end
   
-  def decrypt(service_name,key)
+  def self.decrypt(service_name,key)
     cipher_type = "aes-128-ecb"
     service = find_by_service(service_name)
     encrypted_data = service.encrypted_password
@@ -61,7 +61,7 @@ class Encpassword < ActiveRecord::Base
   #:arg: key => String
   #:arg: iv => String
   #:arg: cipher_type => String
- def aes_decrypt(encrypted_data, key, iv, cipher_type)
+ def self.aes_decrypt(encrypted_data, key, iv, cipher_type)
     aes = OpenSSL::Cipher::Cipher.new(cipher_type)
     aes.decrypt
     key = OpenSSL::PKCS5.pbkdf2_hmac_sha1(key, "randomString", 1024, aes.key_len)
