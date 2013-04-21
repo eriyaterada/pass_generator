@@ -1,6 +1,9 @@
 class EncpasswordsController < ApplicationController
   before_filter :authorize, :check_session
+  #this ensures that the user has to be logged-in to visit all the webpages
+  #this also ensures that when a new page is loaded, the system always check the session status
   
+  #this authenticate the user is logged in correctly
   def authorize
       unless User.find_by_id(session[:remember_token])
         flash[:notice] = "Please login"
@@ -8,6 +11,9 @@ class EncpasswordsController < ApplicationController
     end
   end
   
+  #this method checks the session's status
+  # session[:expire_time] => Time
+  # return => nil
   def check_session
     # if a session's expiration time it is old, sign the user out by force
     if session[:expire_time] < Time.now
@@ -20,6 +26,7 @@ class EncpasswordsController < ApplicationController
   
   # GET /encpasswords
   # GET /encpasswords.json
+  # this method shows user's all encpasswords in a list
   def index
     @encpasswords = current_user.encpasswords.all
     
@@ -32,6 +39,9 @@ class EncpasswordsController < ApplicationController
 
   # GET /encpasswords/1
   # GET /encpasswords/1.json
+  # this method shows a user's encpassword in a list but the user can only view its own information
+  # params[:id]
+  # return => nil
   def show
     if current_user.encpasswords.find_by_id(params[:id])
     
@@ -49,6 +59,7 @@ class EncpasswordsController < ApplicationController
 
   # GET /encpasswords/new
   # GET /encpasswords/new.json
+  # this method generates the form to create the new encpassword object
   def new
     @encpassword = Encpassword.new
 
@@ -59,12 +70,18 @@ class EncpasswordsController < ApplicationController
   end
 
   # GET /encpasswords/1/edit
+  # this method gets the selected encpassword object
+  # return Encpassword
+  # params[:id] => integer
   def edit
     @encpassword = Encpassword.find(params[:id])
   end
 
   # POST /encpasswords
   # POST /encpasswords.json
+  # this method creates a new encpassword object
+  # session[:remember_token] => string
+  # params[:encpassword][:master_password] => string
   def create
     @encpassword  = current_user.encpasswords.build(params[:encpassword])
     
@@ -90,6 +107,10 @@ class EncpasswordsController < ApplicationController
 
   # PUT /encpasswords/1
   # PUT /encpasswords/1.json
+  # this method updates the attributes of a selected encpassword object 
+  # return nil
+  # params[:id] => integer
+  # params[:encpassword] => string
   def update
     @encpassword = Encpassword.find(params[:id])
 
@@ -106,6 +127,9 @@ class EncpasswordsController < ApplicationController
 
   # DELETE /encpasswords/1
   # DELETE /encpasswords/1.json
+  # this delete a selected encpassword object
+  # return => nil
+  # params[:id] => integer
   def destroy
     @encpassword = Encpassword.find(params[:id])
     @encpassword.destroy
@@ -115,6 +139,12 @@ class EncpasswordsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  #this method enables the user to decrypt an ecnrypted password which belonging to a selected service
+  #return => string
+  #session[:remember_token] => string
+  #params[:Master_password] => string
+  #params[:service] => string
   def decrypt
       user = User.authenticate(User.find(session[:remember_token]).email, params[:Master_Password])
       if user.nil?
@@ -126,14 +156,21 @@ class EncpasswordsController < ApplicationController
       @decrypted_password = Encpassword.decrypt(params[:service],params[:Master_Password])
     end
   end
+  #this method return the current user
+  #return => User
+  #session[:remember_token] => string
   def current_user
     @current_user = User.find_by_id(session[:remember_token])
   end
-  
+ 
+  # this methods enable to keep track of the current loggin user
+  # return => nil
   def user_from_remember_token
     User.authenticate_with_salt(*remember_token)
   end
-    
+   
+   # a helper method
+   # return => nil
   def remember_token
     cookies.signed[:remember_token] || [nil, nil]
   end

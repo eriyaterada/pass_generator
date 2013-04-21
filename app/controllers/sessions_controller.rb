@@ -3,14 +3,18 @@ class SessionsController < ApplicationController
   def authorize
   end
   
+  # this method if the user is alreay logged in, redirects the user from this
+  # sign_in page to their home page
   def new
-    # if the user is alreay logged in, redirects the user from this
-    # sign_in page to their home page
+ 
     if session[:remember_token]
       redirect_to :controller => 'encpasswords', :action => 'index'
     end
   end
-
+  # this methods creates a new session and sets the session[:expire_time]
+  # :arg: session[:expire_time] => Time
+  # :arg: params[:session][:email] => string
+  # :arg: params[:session][:password] => string
   def create
     # a session's expiration time is set to 10 minutes into the future upon creating a new session
     session[:expire_time] = 10.minutes.since
@@ -25,7 +29,9 @@ class SessionsController < ApplicationController
       redirect_to :controller => 'encpasswords', :action => 'index'
     end
   end
-  
+  #this method destroy a session and redirect the user to the sign in page
+  # :arg: session[:remember_token] => string
+  # :arg: session[:user] => User
   def destroy
     session[:remember_token] = nil
     session[:user] = nil
@@ -41,22 +47,5 @@ class SessionsController < ApplicationController
   end
   
   
-  %%
   
-  def current_user
-    @current_user ||= user_from_remember_token
-  end
-  
-  private
-  
-    def user_from_remember_token
-      User.authenticate_with_salt(*remember_token)
-    end
-    
-    def remember_token
-      cookies.signed[:remember_token] || [nil, nil]
-    end
-
-
-%
 end

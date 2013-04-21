@@ -13,6 +13,12 @@ class Encpassword < ActiveRecord::Base
     #this ensures that before you save the password to the databse,
     #the method encrypt_password is called
     
+    #Set up the aes encryption mode for the encryption
+    #set data to the virtual attribute password and set the key to
+    # the virtual attribute master password
+    #:return: => String
+    #:arg: data => String 
+    #:arg: key => String
   def encrypt()
     cipher_type = "aes-128-ecb"
     data = password;
@@ -20,14 +26,19 @@ class Encpassword < ActiveRecord::Base
     
     self.encrypted_password = aes_encrypt(data,key,nil,cipher_type).to_s
   end
-  
+    #class method, set up the aes encryption mode for the encryption
+    #set service to the service and set the encrypted_data to
+    # the attribute encrypted_password
+    #:return: => String
+    #:arg: service => String 
+    #:arg: encrypted_data => String
   def self.decrypt(service_name,key)
     cipher_type = "aes-128-ecb"
     service = find_by_service(service_name)
     encrypted_data = service.encrypted_password
     aes_decrypt(encrypted_data,key,nil,cipher_type)
   end
-  # Encrypts a block of data given an encryption key and an 
+  # encrypts a block of data given an encryption key and an 
   # initialization vector (iv).  Keys, iv's, and the data returned 
   # are all binary strings.  Cipher_type should be "AES-128-ECB"
   # Pass nil for the iv if the encryption type doesn't use iv's (like
@@ -48,7 +59,7 @@ class Encpassword < ActiveRecord::Base
     aes.iv = iv if iv != nil
     aes.update(data.to_s) + aes.final    
   end
-  # Decrypts a block of data (encrypted_data) given an encryption key
+  # Class method, decrypts a block of data (encrypted_data) given an encryption key
   # and an initialization vector (iv).  Keys, iv's, and the data 
   # returned are all binary strings.  Cipher_type should be
   # "AES-128-ECB" Pass nil for the iv if the encryption type
