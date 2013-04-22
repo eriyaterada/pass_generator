@@ -19,7 +19,7 @@
       <tr>
         <td>
         	<% if encpassword.service_url? %>
-        		<%= link_to encpassword.service, encpassword.service_url %>
+        		<%= link_to encpassword.service, encpassword.service_url, :target => '_blank' %>
         	<% else %>
         		<%= encpassword.service %>
         	<% end %>
