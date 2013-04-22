@@ -9,7 +9,7 @@ class Encpassword < ActiveRecord::Base
   
   validates :password, :presence => true
   validates :master_password, :presence => true
-  validates :service, :presence => true, :length => {:maximum => 50}, :uniqueness => {:case_sensitive => false}
+  validates :service, :presence => true, :length => {:maximum => 50}, :uniqueness => {:case_sensitive => false, :scope => :user_id}
   validates_format_of :service_url, :with => /(^$)|(^http\:\/\/)/, :message => "must begin with http://"
   before_save :encrypt
   
