@@ -13,8 +13,9 @@ class User < ActiveRecord::Base
   #AUTHENTICATION
   attr_accessor :password #this creates the virtual attributes password
   attr_accessible :name, :email, :password, :password_confirmation
-  passowrd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[!\#\$\@\_\+\,\?\[\]\&])(?!.*["'])/ #regular expression for including upper and lower case letters, numbers and special characters
-  validates :password, :presence => true, :confirmation => true, :length => {:within =>8...32}, :format => {:with => passowrd_regex}
+  passowrd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[!\#\$\@\_\+\-\,\?\[\]\&\*])(?!.*["'])/ #regular expression for including upper and lower case letters, numbers and special characters
+  validates :password, :presence => true, :confirmation => true, :length => {:within =>8...32}
+  validates_format_of :password, :with => passowrd_regex, :message => "must contain at least one upper-case letter, one lower-case letter, one digit, and one special character (!#$@_+-,?[ ]&*)"
 
   
   before_create { generate_token(:auth_token)}

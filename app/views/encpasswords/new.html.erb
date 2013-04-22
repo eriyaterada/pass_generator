@@ -1,5 +1,6 @@
 <%- model_class = Encpassword -%>
 <div class="page-header">
   <h1><%=t '.title', :default => [:'helpers.titles.news', 'Create new password'], :model => model_class.model_name.human %></h1>
+  <p>We need you to retype your login password for this website as the Master password so that we can use it to encrypt this newly generated password!</p>
 </div>
 <%= render :partial => 'form' %>

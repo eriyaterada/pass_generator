@@ -6,10 +6,13 @@ class Encpassword < ActiveRecord::Base
   attr_accessible :encrypted_password, :service, :service_url, :password, :master_password
   belongs_to :user
 
-  validates :service, :presence => true, :length => {:maximum => 50}
+  
   validates :password, :presence => true
   validates :master_password, :presence => true
+  validates :service, :presence => true, :length => {:maximum => 50}
+  validates_format_of :service_url, :with => /(^$)|(^http\:\/\/)/, :message => "must begin with http://"
   before_save :encrypt
+  
     #this ensures that before you save the password to the databse,
     #the method encrypt_password is called
     
@@ -26,6 +29,7 @@ class Encpassword < ActiveRecord::Base
     
     self.encrypted_password = aes_encrypt(data,key,nil,cipher_type).to_s
   end
+  
     #class method, set up the aes encryption mode for the encryption
     #set service to the service and set the encrypted_data to
     # the attribute encrypted_password
@@ -38,6 +42,7 @@ class Encpassword < ActiveRecord::Base
     encrypted_data = service.encrypted_password
     aes_decrypt(encrypted_data,key,nil,cipher_type)
   end
+  
   # encrypts a block of data given an encryption key and an 
   # initialization vector (iv).  Keys, iv's, and the data returned 
   # are all binary strings.  Cipher_type should be "AES-128-ECB"
@@ -51,7 +56,6 @@ class Encpassword < ActiveRecord::Base
   #:arg: key => String
   #:arg: iv => String
   #:arg: cipher_type => String
-
  def aes_encrypt(data, key, iv, cipher_type)
     aes = OpenSSL::Cipher::Cipher.new(cipher_type)
     aes.encrypt
@@ -59,6 +63,7 @@ class Encpassword < ActiveRecord::Base
     aes.iv = iv if iv != nil
     aes.update(data.to_s) + aes.final    
   end
+  
   # Class method, decrypts a block of data (encrypted_data) given an encryption key
   # and an initialization vector (iv).  Keys, iv's, and the data 
   # returned are all binary strings.  Cipher_type should be

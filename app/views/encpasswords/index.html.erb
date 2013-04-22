@@ -18,10 +18,11 @@
     <% @encpasswords.each do |encpassword| %>
       <tr>
         <td>
-        	<%= if encpassword.service_url
-        			link_to encpassword.service, encpassword.service_url
-        		else encpassword.service 
-        		end %>
+        	<% if encpassword.service_url? %>
+        		<%= link_to encpassword.service, encpassword.service_url %>
+        	<% else %>
+        		<%= encpassword.service %>
+        	<% end %>
         </td>
         	<td><a href="#myModal" role="button" class="btn btn-warning" data-toggle="modal" onclick="myfunc(this.id)" id=<%= encpassword.service %>>View Password</a></td>
         <td><%=l encpassword.created_at %></td>
